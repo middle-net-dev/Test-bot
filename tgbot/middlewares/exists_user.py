@@ -42,6 +42,7 @@ class ExistsUserMiddleware(BaseMiddleware):
                 if user_fullname is None: user_fullname = ""
                 if len(user_surname) >= 1: user_fullname += f" {user_surname}"
 
+
                 if get_user is None:
                     add_userx(user_id, user_login.lower(), user_name)
                     add_data_to_sendx(user_id)
