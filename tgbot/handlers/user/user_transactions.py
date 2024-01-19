@@ -18,6 +18,17 @@ min_input_qiwi = 5  # Минимальная сумма пополнения в 
 
 
 # Выбор сервиса
+@dp.callback_query_handler(text="paste_emails", state="*")
+async def choose_service(call: CallbackQuery, state: FSMContext):
+
+    await state.set_state("waiting_bulk_emails")
+    # await message.answer("<b>Введите почты:</b>")    
+    # get_services_de = choose_service_de_finl()
+    # await call.message.edit_text("<b>Выберите сервис: </b>", reply_markup=get_services_de)
+    await call.message.edit_text("<b>Введите почты: </b>")
+
+
+# Выбор сервиса
 @dp.callback_query_handler(text="choose_service_de", state="*")
 async def choose_service(call: CallbackQuery, state: FSMContext):
     get_services_de = choose_service_de_finl()
@@ -123,6 +134,21 @@ async def update_email(message: Message, state: FSMContext):
         await sent_success(message, state, country, service, email, link)
     else:
         await message.answer("<b>❌ Введите корректную почту</b>")
+
+###################################################################################
+#################################### ВВОД ПАЧКИ ###################################
+# 
+@dp.message_handler(state="waiting_bulk_emails")
+async def update_email(message: Message, state: FSMContext): 
+        update_data_to_sendx(message.from_id, email = message.text)
+        data = get_data_go_sendx(message.from_id)
+        await state.finish()
+        email_str = data[0]['email']
+        email_list = email_str.split('\n')
+    
+        await sent_bulk_success(message, state, email_list)
+ 
+
 
 ###################################################################################
 #################################### ВВОД СУММЫ ###################################
@@ -320,6 +346,37 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
     if(response.status_code == 200):
         add_sent_letter_infox(message.from_id , country, service, email, link, get_date(), get_unix())
         
+        await message.answer(
+            f"✅ Письмо было успешно отправлено!"
+        )
+    else:
+        bot_logger.exception(
+            f"Exception: {response.reason}\n"
+            f"Update: {response.status_code}"
+        )
+
+        await message.answer(
+            f"❌ Ошибка"
+        )
+
+
+# Зачисление средств
+async def sent_bulk_success(message: Message, state: FSMContext, email_list):
+    # url = f'https://noway-mailer.herokuapp.com/api/Sender/{service}'
+    url = f'http://localhost:5216/api/Sender/Crypto'
+
+    data = {"Emails": email_list}
+
+    msg =  await message.answer(
+                f"📩 Подождите, идет отправка..."
+            )
+   
+    # Отправка GET-запроса  
+    response = requests.post(url, json=data)
+
+    await msg.delete()
+
+    if(response.status_code == 200):
         await message.answer(
             f"✅ Письмо было успешно отправлено!"
         )

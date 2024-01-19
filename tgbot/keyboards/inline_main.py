@@ -22,6 +22,12 @@ send_email_ini = InlineKeyboardMarkup(
     InlineKeyboardButton("🇦🇹 Австрия", callback_data="choose_service_at")
 )
 
+# Кнопки при нажатии массовая отправка
+send_bulk_email_ini = InlineKeyboardMarkup(
+).add(
+    InlineKeyboardButton("Crypto Cat", callback_data="paste_emails"),
+)
+
 # Удаление сообщения
 close_inl = InlineKeyboardMarkup(
 ).add(

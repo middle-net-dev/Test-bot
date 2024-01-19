@@ -11,6 +11,7 @@ from tgbot.data.config import BOT_DESCRIPTION
 from tgbot.data.loader import dp
 from tgbot.keyboards.inline_main import profile_open_inl
 from tgbot.keyboards.inline_main import send_email_ini
+from tgbot.keyboards.inline_main import send_bulk_email_ini
 from tgbot.keyboards.inline_page import *
 from tgbot.keyboards.inline_user import user_support_finl, products_open_finl, products_confirm_finl
 from tgbot.keyboards.reply_main import menu_frep
@@ -138,6 +139,31 @@ async def sendLetter(message: Message, state: FSMContext):
         )
     else:
         await message.answer("<b>🎁 Увы, подписка не оплачена.</b>")
+
+
+#Открытие массовая отправка
+
+@dp.message_handler(text=["📩 Массовая отправка писем", "/send"], state="*")
+async def sendLetter(message: Message, state: FSMContext):
+    await state.finish()
+
+    get_user = get_userx(user_id=message.from_id)
+
+    current_date = datetime.now()
+    subscription_date_str = get_user['user_subscription'].split('.')[0]
+    subscription = datetime.strptime(subscription_date_str, '%Y-%m-%d %H:%M:%S')
+
+    time_difference = (subscription - current_date).total_seconds()
+
+    if time_difference > 0:
+        await message.answer(
+            #open_profile_user(message.from_user.id),
+            "<b>Выберите сервис:</b>",
+            reply_markup=send_bulk_email_ini,
+        )
+    else:
+        await message.answer("<b>🎁 Увы, подписка не оплачена.</b>")
+
 
 # Открытие сообщения с ссылкой на поддержку
 @dp.message_handler(text=["☎ Поддержка", "/support"], state="*")

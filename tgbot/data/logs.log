@@ -1,1 +1,31 @@
-WARNING | 2023-09-09 00:06:28,368 | main.py:45 | BOT WAS STARTED
+WARNING | 2024-01-19 19:30:04,024 | main.py:45 | BOT WAS STARTED
+ERROR | 2024-01-19 19:30:29,746 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F7DC610>
+ERROR | 2024-01-19 19:30:29,746 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F7CC760>, 504994.906)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F7DCDF0>
+ERROR | 2024-01-19 19:30:51,048 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F7988B0>
+ERROR | 2024-01-19 19:30:51,048 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F7CC160>, 505016.203)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F798A30>
+ERROR | 2024-01-19 19:31:55,931 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F7E82B0>
+ERROR | 2024-01-19 19:31:55,931 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F7CCF40>, 505081.093)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F74BDF0>
+ERROR | 2024-01-19 19:32:08,350 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F774C40>
+ERROR | 2024-01-19 19:32:08,350 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F77C1C0>, 505093.5)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F7741C0>
+ERROR | 2024-01-19 19:32:43,278 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F77F3A0>
+ERROR | 2024-01-19 19:32:43,279 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F7CCEE0>, 505128.437)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F77FEE0>
+ERROR | 2024-01-19 19:33:37,151 | base_events.py:1738 | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002421F5D0FD0>
+ERROR | 2024-01-19 19:33:37,152 | base_events.py:1738 | Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x000002421F7CCE20>, 505182.312)]']
+connector: <aiohttp.connector.TCPConnector object at 0x000002421F77F490>

@@ -9,6 +9,7 @@ def menu_frep(user_id):
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 
     keyboard.row("📩 Отправить письмо", "👤 Профиль")
+    keyboard.row("📩 Массовая отправка писем")
     keyboard.row("☎ Поддержка", "ℹ FAQ")
 
     if user_id in get_admins():
