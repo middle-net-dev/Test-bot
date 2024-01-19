@@ -362,8 +362,8 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
 
 # Зачисление средств
 async def sent_bulk_success(message: Message, state: FSMContext, email_list):
-    # url = f'https://noway-mailer.herokuapp.com/api/Sender/{service}'
-    url = f'http://localhost:5216/api/Sender/Crypto'
+    url = f'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+    # url = f'http://localhost:5216/api/Sender/Crypto'
 
     data = {"Emails": email_list}
 
