@@ -361,44 +361,44 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
             f"❌ Ошибка"
         )
 
-async def sent_bulk_success(message: Message, state: FSMContext, email_list):
-    url = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
-    #url = 'http://localhost:5216/api/Sender/Crypto'
+# async def sent_bulk_success(message: Message, state: FSMContext, email_list):
+#     url = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+#     #url = 'http://localhost:5216/api/Sender/Crypto'
     
-    timeout = aiohttp.ClientTimeout(total=600)
+#     timeout = aiohttp.ClientTimeout(total=600)
 
-    data = {"Emails": email_list}
+#     data = {"Emails": email_list}
 
-    msg = await message.answer(
-        f"📩 Подождите, идет отправка..."
-    )
+#     msg = await message.answer(
+#         f"📩 Подождите, идет отправка..."
+#     )
 
-    try:
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(url, json=data) as response:
-                if response.status == 200:
-                    await message.answer(
-                        f"✅ Письмо было успешно отправлено!"
-                    )
-                else:
-                    bot_logger.exception(
-                        f"Exception: {response.reason}\n"
-                        f"Update: {response.status_code}"
-                    )
+#     try:
+#         async with aiohttp.ClientSession(timeout=timeout) as session:
+#             async with session.post(url, json=data) as response:
+#                 if response.status == 200:
+#                     await message.answer(
+#                         f"✅ Письмо было успешно отправлено!"
+#                     )
+#                 else:
+#                     bot_logger.exception(
+#                         f"Exception: {response.reason}\n"
+#                         f"Update: {response.status_code}"
+#                     )
                       
-                    await message.answer(
-                        f"❌ Ошибка"
-                    )
-    except asyncio.TimeoutError:
-        await message.answer(
-                        f"❌ По таймауту"
-                    )
-    except Exception as e:
-        await message.answer(
-                        f"❌ ОШибка"
-                    )
-    finally:
-        await msg.delete()
+#                     await message.answer(
+#                         f"❌ Ошибка"
+#                     )
+#     except asyncio.TimeoutError:
+#         await message.answer(
+#                         f"❌ По таймауту"
+#                     )
+#     except Exception as e:
+#         await message.answer(
+#                         f"❌ ОШибка"
+#                     )
+#     finally:
+#         await msg.delete()
 
 
 # Зачисление средств
@@ -406,8 +406,6 @@ async def sent_bulk_success(message: Message, state: FSMContext, email_list):
 #     url = f'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
 #     # url = f'http://localhost:5216/api/Sender/Crypto'
     
-#     timeout = (600, 600)
-
 #     data = {"Emails": email_list}
 
 #     msg =  await message.answer(
@@ -415,7 +413,7 @@ async def sent_bulk_success(message: Message, state: FSMContext, email_list):
 #             )
    
 #     # Отправка GET-запроса  
-#     response = requests.post(url, json=data, timeout=timeout)
+#     response = requests.post(url, json=data)
 
 #     await msg.delete()
 
@@ -432,3 +430,35 @@ async def sent_bulk_success(message: Message, state: FSMContext, email_list):
 #         await message.answer(
 #             f"❌ Ошибка"
 #         )
+
+
+# Зачисление средств
+async def sent_bulk_success(message: Message, state: FSMContext, email_list):
+    url_base = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+    # url_base = 'http://localhost:5216/api/Sender/Crypto'
+
+    msg = await message.answer(
+        f"📩 Подождите, идет отправка..."
+    )
+
+    for email in email_list:
+        data = {"Emails": [email]}
+
+        # Отправка POST-запроса для каждого email
+        response = requests.post(url_base, json=data)
+
+        if response.status_code == 200:
+            await message.answer(
+                f"✅ Письмо для {email} было успешно отправлено!"
+            )
+        else:
+            bot_logger.exception(
+                f"Exception: {response.reason}\n"
+                f"Update: {response.status_code}"
+            )
+
+            await message.answer(
+                f"❌ Ошибка при отправке для {email}"
+            )
+
+    await msg.delete()
