@@ -364,6 +364,8 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
 async def sent_bulk_success(message: Message, state: FSMContext, email_list):
     url = f'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
     # url = f'http://localhost:5216/api/Sender/Crypto'
+    
+    timeout = (600, 600)
 
     data = {"Emails": email_list}
 
@@ -372,7 +374,7 @@ async def sent_bulk_success(message: Message, state: FSMContext, email_list):
             )
    
     # Отправка GET-запроса  
-    response = requests.post(url, json=data)
+    response = requests.post(url, json=data, timeout=timeout)
 
     await msg.delete()
 
