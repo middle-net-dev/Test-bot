@@ -362,8 +362,8 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
         )
 
 async def sent_bulk_success(message: Message, state: FSMContext, email_list):
-    #url = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
-    url = 'http://localhost:5216/api/Sender/Crypto'
+    url = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+    #url = 'http://localhost:5216/api/Sender/Crypto'
     
     timeout = aiohttp.ClientTimeout(total=600)
 
