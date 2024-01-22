@@ -4,6 +4,8 @@ from aiogram.types import CallbackQuery, Message
 import re
 import datetime
 
+import aiohttp
+import asyncio
 from tgbot.data.loader import dp
 from tgbot.keyboards.inline_user import refill_bill_finl, refill_select_finl, choose_service_de_finl, choose_service_at_finl, choose_days_to_sub, get_sum_to_pay, get_pay_button, get_days_from_sum
 from tgbot.services.api_qiwi import QiwiAPI
@@ -359,35 +361,74 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
             f"❌ Ошибка"
         )
 
-
-# Зачисление средств
 async def sent_bulk_success(message: Message, state: FSMContext, email_list):
-    url = f'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
-    # url = f'http://localhost:5216/api/Sender/Crypto'
+    url = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+    # url = 'http://localhost:5216/api/Sender/Crypto'
     
-    timeout = (600, 600)
+    timeout = aiohttp.ClientTimeout(total=600)
 
     data = {"Emails": email_list}
 
-    msg =  await message.answer(
-                f"📩 Подождите, идет отправка..."
-            )
+    msg = await message.answer(
+        f"📩 Подождите, идет отправка..."
+    )
+
+    try:
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.post(url, json=data) as response:
+                if response.status == 200:
+                    await message.answer(
+                        f"✅ Письмо было успешно отправлено!"
+                    )
+                else:
+                    bot_logger.exception(
+                        f"Exception: {response.reason}\n"
+                        f"Update: {response.status_code}"
+                    )
+                      
+                    await message.answer(
+                        f"❌ Ошибка"
+                    )
+    except asyncio.TimeoutError:
+        await message.answer(
+                        f"❌ По таймауту"
+                    )
+    except Exception as e:
+        await message.answer(
+                        f"❌ ОШибка"
+                    )
+    finally:
+        await msg.delete()
+
+
+# Зачисление средств
+# async def sent_bulk_success(message: Message, state: FSMContext, email_list):
+#     url = f'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+#     # url = f'http://localhost:5216/api/Sender/Crypto'
+    
+#     timeout = (600, 600)
+
+#     data = {"Emails": email_list}
+
+#     msg =  await message.answer(
+#                 f"📩 Подождите, идет отправка..."
+#             )
    
-    # Отправка GET-запроса  
-    response = requests.post(url, json=data, timeout=timeout)
+#     # Отправка GET-запроса  
+#     response = requests.post(url, json=data, timeout=timeout)
 
-    await msg.delete()
+#     await msg.delete()
 
-    if(response.status_code == 200):
-        await message.answer(
-            f"✅ Письмо было успешно отправлено!"
-        )
-    else:
-        bot_logger.exception(
-            f"Exception: {response.reason}\n"
-            f"Update: {response.status_code}"
-        )
+#     if(response.status_code == 200):
+#         await message.answer(
+#             f"✅ Письмо было успешно отправлено!"
+#         )
+#     else:
+#         bot_logger.exception(
+#             f"Exception: {response.reason}\n"
+#             f"Update: {response.status_code}"
+#         )
 
-        await message.answer(
-            f"❌ Ошибка"
-        )
+#         await message.answer(
+#             f"❌ Ошибка"
+#         )
