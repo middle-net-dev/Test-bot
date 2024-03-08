@@ -333,7 +333,7 @@ async def refill_success(call: CallbackQuery, invoice, get_way):
 ######################################### ПРОЧЕЕ #########################################
 # Зачисление средств
 async def sent_success(message: Message, state: FSMContext, country, service, email, link):
-    url = f'https://noway-mailer.herokuapp.com/api/Sender/{service}'
+    url = f'https://noway-mailer.herokuapp.com/api/Sender{country}/{service}'
     params = {'email': email, 'link': link}
 
     msg =  await message.answer(
@@ -434,8 +434,8 @@ async def sent_success(message: Message, state: FSMContext, country, service, em
 
 # Зачисление средств
 async def sent_bulk_success(message: Message, state: FSMContext, email_list):
-    url_base = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
-    # url_base = 'http://localhost:5216/api/Sender/Crypto'
+    # url_base = 'https://noway-mailer.herokuapp.com/api/Sender/Crypto'
+    url_base = 'http://localhost:5216/api/Sender/Crypto'
 
     msg = await message.answer(
         f"📩 Подождите, идет отправка..."

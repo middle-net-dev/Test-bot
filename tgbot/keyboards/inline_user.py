@@ -9,6 +9,7 @@ def choose_service_de_finl():
     keyboard = InlineKeyboardMarkup(
     ).add(
         InlineKeyboardButton("🇩🇪 Ebay Kleinanzeigen", callback_data="enter_link:ebay:Germany"),
+        InlineKeyboardButton("🇩🇪 Ebay Kleinanzeigen | BankKonto", callback_data="enter_link:ebay-konto:Germany"),
         InlineKeyboardButton("🇩🇪 Shpock", callback_data="enter_link:shpock:Germany"),
     ).add(InlineKeyboardButton("🔙 Вернуться", callback_data="user_profile"))
 
