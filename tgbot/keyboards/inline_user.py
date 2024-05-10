@@ -15,6 +15,16 @@ def choose_service_de_finl():
 
     return keyboard
 
+# Выбор сервиса Норвегия
+def choose_service_no_finl():
+    keyboard = InlineKeyboardMarkup(
+    ).add(
+        InlineKeyboardButton("🇳🇴 Finn.no", callback_data="enter_link:finn:No"),
+    ).add(InlineKeyboardButton("🔙 Вернуться", callback_data="user_profile"))
+
+    return keyboard
+
+
 # Выбор сервиса Австрия
 def choose_service_at_finl():
     keyboard = InlineKeyboardMarkup(

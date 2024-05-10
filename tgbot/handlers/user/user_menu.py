@@ -7,7 +7,6 @@ import datetime
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import MessageCantBeDeleted
-from services.api_sqlite import get_userx
 
 from tgbot.data.config import BOT_DESCRIPTION
 from tgbot.data.loader import dp
