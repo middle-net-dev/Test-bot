@@ -16,6 +16,15 @@ def choose_service_de_finl():
     return keyboard
 
 # Выбор сервиса Норвегия
+def choose_service_se_finl():
+    keyboard = InlineKeyboardMarkup(
+    ).add(
+        InlineKeyboardButton("🇸🇪 Blocket.se", callback_data="enter_link:blocket:Se"),
+    ).add(InlineKeyboardButton("🔙 Вернуться", callback_data="user_profile"))
+
+    return keyboard
+
+# Выбор сервиса Норвегия
 def choose_service_no_finl():
     keyboard = InlineKeyboardMarkup(
     ).add(

@@ -7,7 +7,7 @@ import datetime
 import aiohttp
 import asyncio
 from tgbot.data.loader import dp
-from tgbot.keyboards.inline_user import refill_bill_finl, refill_select_finl, choose_service_de_finl, choose_service_no_finl, choose_service_at_finl, choose_days_to_sub, get_sum_to_pay, get_pay_button, get_days_from_sum
+from tgbot.keyboards.inline_user import refill_bill_finl, refill_select_finl, choose_service_de_finl, choose_service_no_finl, choose_service_se_finl, choose_service_at_finl, choose_days_to_sub, get_sum_to_pay, get_pay_button, get_days_from_sum
 from tgbot.services.api_qiwi import QiwiAPI
 from tgbot.services.api_sqlite import update_userx, get_refillx, add_refillx, get_userx, update_data_to_sendx, get_data_go_sendx, add_sent_letter_infox
 from tgbot.utils.const_functions import get_date, get_unix
@@ -35,6 +35,12 @@ async def choose_service(call: CallbackQuery, state: FSMContext):
 async def choose_service(call: CallbackQuery, state: FSMContext):
     get_services_de = choose_service_de_finl()
     await call.message.edit_text("<b>Выберите сервис: </b>", reply_markup=get_services_de)
+
+# Выбор сервиса
+@dp.callback_query_handler(text="choose_service_se", state="*")
+async def choose_service(call: CallbackQuery, state: FSMContext):
+    get_services_se = choose_service_se_finl()
+    await call.message.edit_text("<b>Выберите сервис: </b>", reply_markup=get_services_se)    
 
 # Выбор сервиса
 @dp.callback_query_handler(text="choose_service_no", state="*")

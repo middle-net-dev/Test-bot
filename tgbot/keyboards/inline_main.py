@@ -18,8 +18,9 @@ profile_open_inl = InlineKeyboardMarkup(
 # Кнопки при нажатии отправить письмо
 send_email_ini = InlineKeyboardMarkup(
 ).add(
+    InlineKeyboardButton("🇸🇪 Швеция", callback_data="choose_service_se"),
     InlineKeyboardButton("🇩🇪 Германия", callback_data="choose_service_de"),
-     InlineKeyboardButton("🇳🇴 Норвегия", callback_data="choose_service_no"),
+    InlineKeyboardButton("🇳🇴 Норвегия", callback_data="choose_service_no"),
     InlineKeyboardButton("🇦🇹 Австрия", callback_data="choose_service_at")
 )
 
